@@ -2,16 +2,42 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>🌟 Biblioteca Divina – Afirmaciones & Avisos</title>
+  <title>🌌 Biblioteca Divina – Afirmaciones & Avisos</title>
+
+  <!-- tsParticles -->
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
+
   <style>
     body {
       margin: 0;
       padding: 0;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      background: #000000;
       font-family: 'Segoe UI', sans-serif;
       color: #ffffff;
       text-align: center;
       padding: 40px 20px;
+      overflow-x: hidden;
+    }
+
+    #video-fondo {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    #fondo-estrellas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
     }
 
     h1 {
@@ -33,6 +59,7 @@
       display: flex;
       justify-content: center;
       gap: 20px;
+      flex-wrap: wrap;
     }
 
     .categorias button {
@@ -79,7 +106,7 @@
 
     #contenido, #avisos {
       margin: 40px auto 0 auto;
-      background: rgba(255,255,255,0.1);
+      background: rgba(0, 0, 0, 0.7);
       padding: 25px;
       border-radius: 12px;
       width: 90%;
@@ -88,7 +115,7 @@
       overflow-y: auto;
       white-space: pre-wrap;
       border: 2px solid #fff;
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(5px);
       box-shadow: 0 0 20px #fff;
       font-family: 'Courier New', monospace;
       text-align: left;
@@ -99,14 +126,58 @@
       display: none;
     }
 
-    footer {
-      margin-top: 40px;
-      font-size: 0.9em;
-      color: #aaa;
+    .fade-in {
+      animation: fadeIn 0.8s ease-in-out forwards;
+      opacity: 0;
     }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    .shooting-star {
+      position: fixed;
+      top: -10px;
+      width: 2px;
+      height: 100px;
+      background: linear-gradient(-45deg, white, transparent);
+      opacity: 0.8;
+      transform: rotate(45deg);
+      animation: shoot 1s linear forwards;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    @keyframes shoot {
+      0% { transform: translate(0, 0) rotate(45deg); opacity: 1; }
+      100% { transform: translate(-600px, 600px) rotate(45deg); opacity: 0; }
+    }
+
+    .footer-epico {
+  margin-top: 40px;
+  font-size: 1.1em;
+  font-weight: bold;
+  color: #ffffff;
+  padding: 10px 20px;
+  background: rgba(0, 0, 0, 0.65); /* Fondo oscuro translúcido */
+  display: inline-block;
+  border-radius: 12px;
+  box-shadow:
+    0 0 10px #ffffff,
+    0 0 30px #ff66cc;
+  text-shadow:
+    0 0 4px #ffffff,
+    0 0 8px #ff99ff;
+}
+
   </style>
 </head>
 <body>
+  <video id="video-fondo" autoplay muted loop>
+    <source src="227941.mp4" type="video/mp4">
+  </video>
+
+  <div id="fondo-estrellas"></div>
 
   <h1>📖 Biblioteca Divina</h1>
 
@@ -118,10 +189,9 @@
   <div class="botones" id="contenedorBotones"></div>
 
   <div id="contenido">Selecciona un video para ver sus afirmaciones aquí ✨</div>
-
   <div id="avisos">Cargando avisos...</div>
 
-  <footer>Creado con amor para Dios, el mundo, y propósito divino 💖</footer>
+  <footer class="footer-epico">Creado con amor para Dios, el mundo, y propósito divino 💖</footer>
 
   <script>
     const afirmaciones = [
@@ -151,54 +221,88 @@
 
     function cargarAfirmaciones(nombreArchivo) {
       fetch('afirmaciones/' + nombreArchivo)
-        .then(response => {
-          if (!response.ok) throw new Error("No se pudo cargar el archivo");
-          return response.text();
-        })
-        .then(texto => {
-          document.getElementById('contenido').innerText = texto;
-        })
-        .catch(error => {
-          document.getElementById('contenido').innerText = "❌ Error: " + error.message;
-        });
+        .then(response => response.text())
+        .then(texto => document.getElementById('contenido').innerText = texto)
+        .catch(error => document.getElementById('contenido').innerText = "❌ Error: " + error.message);
     }
 
     function cargarAvisos() {
       fetch('avisos.txt')
-        .then(response => {
-          if (!response.ok) throw new Error("No se pudo cargar avisos.txt");
-          return response.text();
-        })
-        .then(texto => {
-          document.getElementById('avisos').innerText = texto;
-        })
-        .catch(error => {
-          document.getElementById('avisos').innerText = "⚠️ Error al cargar avisos: " + error.message;
-        });
+        .then(response => response.text())
+        .then(texto => document.getElementById('avisos').innerText = texto)
+        .catch(error => document.getElementById('avisos').innerText = "⚠️ Error al cargar avisos: " + error.message);
     }
 
     function mostrarSeccion(seccion) {
       const botones = document.getElementById('contenedorBotones');
       const contenido = document.getElementById('contenido');
       const avisos = document.getElementById('avisos');
+      contenido.classList.remove("fade-in");
+      avisos.classList.remove("fade-in");
 
       if (seccion === 'afirmaciones') {
         botones.style.display = 'flex';
         contenido.style.display = 'block';
+        contenido.classList.add("fade-in");
         avisos.style.display = 'none';
       } else if (seccion === 'avisos') {
         botones.style.display = 'none';
         contenido.style.display = 'none';
         avisos.style.display = 'block';
+        avisos.classList.add("fade-in");
         cargarAvisos();
       }
     }
 
     document.addEventListener("DOMContentLoaded", () => {
       generarBotones();
-      // No mostrar nada automáticamente
+      cicloEstelar();
     });
-  </script>
 
+    tsParticles.load("fondo-estrellas", {
+      fullScreen: { enable: false },
+      background: { color: { value: "transparent" } },
+      fpsLimit: 60,
+      interactivity: {
+        events: {
+          onHover: { enable: true, mode: "trail" },
+          resize: true
+        },
+        modes: {
+          trail: {
+            delay: 0.05,
+            quantity: 6,
+            particles: {
+              color: { value: ["#ffffff", "#00ffff", "#ffcc00", "#ff00ff", "#00ffcc"] },
+              move: { speed: 3, outModes: { default: "destroy" } },
+              size: { value: 3, animation: { enable: true, speed: 5, minimumValue: 0.1 } },
+              opacity: { value: 1, animation: { enable: true, speed: 1, minimumValue: 0 } }
+            }
+          }
+        }
+      },
+      particles: {
+        number: { value: 100, density: { enable: true, area: 800 } },
+        color: { value: ["#ffffff", "#ffcc00", "#00ffff", "#ff00ff", "#00ffcc"] },
+        opacity: { value: 0.5, random: true },
+        size: { value: 1.5, random: true },
+        move: { enable: true, speed: 0.4, direction: "none", outModes: { default: "bounce" } }
+      },
+      detectRetina: true
+    });
+
+    function lanzarEstrellaFugaz() {
+      const estrella = document.createElement("div");
+      estrella.classList.add("shooting-star");
+      estrella.style.left = `${Math.random() * 100}%`;
+      document.body.appendChild(estrella);
+      setTimeout(() => estrella.remove(), 1200);
+    }
+
+    function cicloEstelar() {
+      lanzarEstrellaFugaz();
+      setTimeout(cicloEstelar, Math.random() * 2000 + 1000);
+    }
+  </script>
 </body>
 </html>
