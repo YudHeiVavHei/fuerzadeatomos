@@ -128,15 +128,15 @@
     const afirmaciones = [
       { nombre: "🔥 Activar_Inmortalidad", archivo: "activar_inmortalidad.txt" },
       { nombre: "💎 chakras_permanentes", archivo: "chakras.txt"},
-      { nombre: "🌈 Afirmaciones Espiritu santo", archivo: "espiritusanto1.txt" },
-      { nombre: "🧘‍♀️ poder oculto Arcangel miguel", archivo: "miguel1.txt" },
-      { nombre: "🔥 Manifestar Destino Arcangel Jeremiel", archivo: "jeremiel.txt" },
+      { nombre: "🌈 Afirmaciones Espíritu Santo", archivo: "espiritusanto1.txt" },
+      { nombre: "🧘‍♀️ Poder Oculto Arcángel Miguel", archivo: "miguel1.txt" },
+      { nombre: "🔥 Manifestar Destino Arcángel Jeremiel", archivo: "jeremiel.txt" },
       { nombre: "💎 Manifestar Deseos en 24 horas", archivo: "deseo24hrs.txt" },
-      { nombre: "🌈 7 rayos 7 arcangeles", archivo: "7rayos7arcangeles1.txt" },
-      { nombre: "💎 bendiciones y amor infinitos", archivo: "amorybendicionessilent1.txt"},
-      { nombre: "💎 Jardín del edén en la tierra", archivo: "jardindeledendecreto1.txt"},
-      { nombre: "💎 Manifestar Realidad al instante", archivo: "decreto_prohibido_magia.txt"},
-      { nombre: "💎 Regeneración de la materia perfecta", archivo: "regeneracion_de_la_materia.txt"}
+      { nombre: "🌈 7 Rayos 7 Arcángeles", archivo: "7rayos7arcangeles1.txt" },
+      { nombre: "💎 Bendiciones y Amor Infinitos", archivo: "amorybendicionessilent1.txt"},
+      { nombre: "💎 Jardín del Edén en la Tierra", archivo: "jardindeledendecreto1.txt"},
+      { nombre: "💎 Manifestar Realidad al Instante", archivo: "decreto_prohibido_magia.txt"},
+      { nombre: "💎 Regeneración de la Materia Perfecta", archivo: "regeneracion_de_la_materia.txt"}
     ];
 
     function generarBotones() {
@@ -183,21 +183,21 @@
       const contenido = document.getElementById('contenido');
       const avisos = document.getElementById('avisos');
 
-      if (seccion === 'afirmaciones') {
+      if (seccion === 'Vídeos y sus afirmaciones') {
         botones.style.display = 'flex';
         contenido.style.display = 'block';
         avisos.style.display = 'none';
-      } else {
+      } else if (seccion === 'Mirame') {
         botones.style.display = 'none';
         contenido.style.display = 'none';
         avisos.style.display = 'block';
-        cargarAvisos(); // Se carga el archivo txt
+        cargarAvisos(); // cargar el archivo
       }
     }
 
     document.addEventListener("DOMContentLoaded", () => {
       generarBotones();
-      mostrarSeccion('afirmaciones');
+      mostrarSeccion('Vídeos y sus afirmaciones');
     });
   </script>
 
