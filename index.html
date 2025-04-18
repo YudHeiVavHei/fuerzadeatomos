@@ -249,27 +249,46 @@
         .then(texto => document.getElementById('avisos').innerText = texto)
         .catch(error => document.getElementById('avisos').innerText = "⚠️ Error al cargar avisos: " + error.message);
     }
+    let seccionActual = null;
 
     function mostrarSeccion(seccion) {
       const botones = document.getElementById('contenedorBotones');
       const contenido = document.getElementById('contenido');
       const avisos = document.getElementById('avisos');
+
+      // Si la misma sección está activa, la cerramos
+      if (seccionActual === seccion) {
+        botones.style.display = 'none';
+        contenido.style.display = 'none';
+        avisos.style.display = 'none';
+        seccionActual = null;
+        return;
+      }
+
+      // Actualizamos la sección actual
+      seccionActual = seccion;
+
+      // Ocultamos todo
+      botones.style.display = 'none';
+      contenido.style.display = 'none';
+      avisos.style.display = 'none';
+
+      // Quitamos fade-ins anteriores
       contenido.classList.remove("fade-in");
       avisos.classList.remove("fade-in");
 
+      // Mostramos la nueva sección
       if (seccion === 'afirmaciones') {
         botones.style.display = 'flex';
         contenido.style.display = 'block';
         contenido.classList.add("fade-in");
-        avisos.style.display = 'none';
       } else if (seccion === 'avisos') {
-        botones.style.display = 'none';
-        contenido.style.display = 'none';
         avisos.style.display = 'block';
         avisos.classList.add("fade-in");
         cargarAvisos();
       }
     }
+
 
     document.addEventListener("DOMContentLoaded", () => {
       generarBotones();
