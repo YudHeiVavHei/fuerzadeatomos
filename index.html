@@ -2,39 +2,196 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Mostrar texto</title>
+  <title>🌟 Biblioteca Divina – Afirmaciones & Avisos</title>
   <style>
-    #contenido {
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      font-family: 'Segoe UI', sans-serif;
+      color: #ffffff;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      font-size: 2.8em;
+      background: linear-gradient(to right, #ffe259, #ffa751);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 20px #fff;
+      animation: glow 2s infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #fff, 0 0 20px #f0f; }
+      to   { text-shadow: 0 0 20px #fff, 0 0 30px #0ff; }
+    }
+
+    .categorias {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .categorias button {
+      background: #00c3ff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1em;
+      color: white;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 0 15px #00c3ff;
+      transition: transform 0.2s ease;
+    }
+
+    .categorias button:hover {
+      transform: scale(1.05);
+      background: #32c4ff;
+    }
+
+    .botones {
+      margin-top: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .botones button {
+      background: #ff7e5f;
+      border: none;
+      padding: 12px 25px;
+      font-size: 1.1em;
+      color: #fff;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 0 15px #ff7e5f;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .botones button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 25px #ff7e5f, 0 0 40px #fff;
+    }
+
+    #contenido, #avisos {
+      margin: 40px auto 0 auto;
+      background: rgba(255,255,255,0.1);
+      padding: 25px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 800px;
+      height: 400px;
+      overflow-y: auto;
       white-space: pre-wrap;
-      border: 1px solid #ccc;
-      padding: 10px;
-      margin-top: 10px;
+      border: 2px solid #fff;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 20px #fff;
+      font-family: 'Courier New', monospace;
+      text-align: left;
+    }
+
+    #avisos {
+      display: none;
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 0.9em;
+      color: #aaa;
     }
   </style>
 </head>
 <body>
 
-  <h1>Leer archivo .txt</h1>
-  <button onclick="mostrarContenido()">Mostrar contenido del video1.txt</button>
+  <h1>📖 Biblioteca Divina</h1>
 
-  <div id="contenido"></div>
+  <div class="categorias">
+    <button onclick="mostrarSeccion('afirmaciones')">✨ Afirmaciones</button>
+    <button onclick="mostrarSeccion('avisos')">📢 Avisos</button>
+  </div>
+
+  <div class="botones" id="contenedorBotones">
+    <!-- Botones generados aquí -->
+  </div>
+
+  <div id="contenido">Selecciona un video para ver sus afirmaciones aquí ✨</div>
+
+  <div id="avisos">Cargando avisos...</div>
+
+  <footer>Creado con amor y propósito divino 💖</footer>
 
   <script>
-    function mostrarContenido() {
-      fetch('README')
+    const afirmaciones = [
+      { nombre: "🔥 Activar_Inmortalidad", archivo: "activar_inmortalidad.txt" },
+      { nombre: "💎 chakras_permanentes", archivo: "chakras.txt"},
+      { nombre: "🌈 Yo Soy Luz", archivo: "yo-soy-luz.txt" },
+      { nombre: "🧘‍♀️ Paz y Sanación", archivo: "paz-y-sanacion.txt" }
+    ];
+
+    function generarBotones() {
+      const contenedor = document.getElementById('contenedorBotones');
+      contenedor.innerHTML = '';
+      afirmaciones.forEach(item => {
+        const btn = document.createElement('button');
+        btn.textContent = item.nombre;
+        btn.onclick = () => cargarAfirmaciones(item.archivo);
+        contenedor.appendChild(btn);
+      });
+    }
+
+    function cargarAfirmaciones(nombreArchivo) {
+      fetch('afirmaciones/' + nombreArchivo)
         .then(response => {
-          if (!response.ok) {
-            throw new Error("No se pudo cargar el archivo");
-          }
+          if (!response.ok) throw new Error("No se pudo cargar el archivo");
           return response.text();
         })
-        .then(data => {
-          document.getElementById('contenido').innerText = data;
+        .then(texto => {
+          document.getElementById('contenido').innerText = texto;
         })
         .catch(error => {
-          document.getElementById('contenido').innerText = "Error al cargar archivo: " + error.message;
+          document.getElementById('contenido').innerText = "❌ Error: " + error.message;
         });
     }
+
+    function cargarAvisos() {
+      fetch('avisos.txt')
+        .then(response => {
+          if (!response.ok) throw new Error("No se pudo cargar avisos.txt");
+          return response.text();
+        })
+        .then(texto => {
+          document.getElementById('avisos').innerText = texto;
+        })
+        .catch(error => {
+          document.getElementById('avisos').innerText = "⚠️ Error al cargar avisos: " + error.message;
+        });
+    }
+
+    function mostrarSeccion(seccion) {
+      const botones = document.getElementById('contenedorBotones');
+      const contenido = document.getElementById('contenido');
+      const avisos = document.getElementById('avisos');
+
+      if (seccion === 'afirmaciones') {
+        botones.style.display = 'flex';
+        contenido.style.display = 'block';
+        avisos.style.display = 'none';
+      } else {
+        botones.style.display = 'none';
+        contenido.style.display = 'none';
+        avisos.style.display = 'block';
+        cargarAvisos(); // Se carga el archivo txt
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      generarBotones();
+      mostrarSeccion('afirmaciones');
+    });
   </script>
 
 </body>
