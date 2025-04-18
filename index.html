@@ -92,9 +92,10 @@
       box-shadow: 0 0 20px #fff;
       font-family: 'Courier New', monospace;
       text-align: left;
+      display: none;
     }
 
-    #avisos {
+    #contenedorBotones {
       display: none;
     }
 
@@ -110,19 +111,17 @@
   <h1>📖 Biblioteca Divina</h1>
 
   <div class="categorias">
-    <button onclick="mostrarSeccion('Vídeos y sus afirmaciones')">✨ Afirmaciones</button>
-    <button onclick="mostrarSeccion('Mirame')">📢 Avisos</button>
+    <button onclick="mostrarSeccion('afirmaciones')">✨ Videos y sus Afirmaciones</button>
+    <button onclick="mostrarSeccion('avisos')">📢 Mirame</button>
   </div>
 
-  <div class="botones" id="contenedorBotones">
-    <!-- Botones generados aquí -->
-  </div>
+  <div class="botones" id="contenedorBotones"></div>
 
   <div id="contenido">Selecciona un video para ver sus afirmaciones aquí ✨</div>
 
   <div id="avisos">Cargando avisos...</div>
 
-  <footer>Creado con amor y propósito divino 💖</footer>
+  <footer>Creado con amor para Dios, el mundo, y propósito divino 💖</footer>
 
   <script>
     const afirmaciones = [
@@ -183,21 +182,21 @@
       const contenido = document.getElementById('contenido');
       const avisos = document.getElementById('avisos');
 
-      if (seccion === 'Vídeos y sus afirmaciones') {
+      if (seccion === 'afirmaciones') {
         botones.style.display = 'flex';
         contenido.style.display = 'block';
         avisos.style.display = 'none';
-      } else if (seccion === 'Mirame') {
+      } else if (seccion === 'avisos') {
         botones.style.display = 'none';
         contenido.style.display = 'none';
         avisos.style.display = 'block';
-        cargarAvisos(); // cargar el archivo
+        cargarAvisos();
       }
     }
 
     document.addEventListener("DOMContentLoaded", () => {
       generarBotones();
-      mostrarSeccion('Vídeos y sus afirmaciones');
+      // No mostrar nada automáticamente
     });
   </script>
 
