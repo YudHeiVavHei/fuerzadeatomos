@@ -154,22 +154,39 @@
     }
 
     .footer-epico {
-  margin-top: 40px;
-  font-size: 1.1em;
-  font-weight: bold;
-  color: #ffffff;
-  padding: 10px 20px;
-  background: rgba(0, 0, 0, 0.65); /* Fondo oscuro translúcido */
-  display: inline-block;
-  border-radius: 12px;
-  box-shadow:
-    0 0 10px #ffffff,
-    0 0 30px #ff66cc;
-  text-shadow:
-    0 0 4px #ffffff,
-    0 0 8px #ff99ff;
-}
+    margin-top: 40px;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #ffffff;
+    padding: 10px 20px;
+    background: rgba(0, 0, 0, 0.65); /* Fondo oscuro translúcido */
+    display: inline-block;
+    border-radius: 12px;
+    box-shadow:
+      0 0 10px #ffffff,
+      0 0 30px #ff66cc;
+    text-shadow:
+      0 0 4px #ffffff,
+      0 0 8px #ff99ff;
+    animation: latidoDivino 3s ease-in-out infinite;
+  }
 
+  @keyframes latidoDivino {
+    0%, 100% {
+      transform: scale(1);
+      text-shadow:
+        0 0 4px #ffffff,
+        0 0 8px #ff99ff,
+        0 0 16px #ff66cc;
+    }
+    50% {
+      transform: scale(1.05);
+      text-shadow:
+        0 0 10px #ffffff,
+        0 0 20px #ff99ff,
+        0 0 40px #ff66cc;
+    }
+  }
   </style>
 </head>
 <body>
@@ -179,11 +196,11 @@
 
   <div id="fondo-estrellas"></div>
 
-  <h1>📖 Biblioteca Divina</h1>
+  <h1>🕊️ Afirmaciones Y Vídeos 🕊️</h1>
 
   <div class="categorias">
-    <button onclick="mostrarSeccion('afirmaciones')">✨ Videos y sus Afirmaciones</button>
-    <button onclick="mostrarSeccion('avisos')">📢 Mirame</button>
+    <button onclick="mostrarSeccion('afirmaciones')">✨ Videos y sus Afirmaciones 🕊️</button>
+    <button onclick="mostrarSeccion('avisos')">📢 Mirame 🕊️</button>
   </div>
 
   <div class="botones" id="contenedorBotones"></div>
@@ -191,7 +208,7 @@
   <div id="contenido">Selecciona un video para ver sus afirmaciones aquí ✨</div>
   <div id="avisos">Cargando avisos...</div>
 
-  <footer class="footer-epico">Creado con amor para Dios, el mundo, y propósito divino 💖</footer>
+  <footer class="footer-epico">💖Creado con amor para 💖Dios💖, el mundo, y propósito divino 💖</footer>
 
   <script>
     const afirmaciones = [
